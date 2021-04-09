@@ -1,0 +1,5 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file conda_requirements.txt
+# platform: win-64
+python=3.8
+pip
