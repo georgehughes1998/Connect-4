@@ -90,10 +90,6 @@ class Board:
         return self._board
 
 
-    def get_board_hash(self):
-        return hash(str(self._board))
-
-
     def get_turn(self):
         return self._turn
 
