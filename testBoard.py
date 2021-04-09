@@ -122,6 +122,17 @@ class GameTest(unittest.TestCase):
             self.board.play(move)
         self.assertEqual(self.board.get_valid_moves(), [])
         self.assertEqual(self.board.get_winner(), STALEMATE)
+        self.assertEqual(self.board.get_turn(), NO_PIECE)
+
+
+    def test_full_column(self):
+        # Test each column individually, checking if the move is valid
+        for i in range(8):
+            self.setUp()
+            for j in range(8):
+                self.board.play(i)
+
+            self.assertNotIn(i, self.board.get_valid_moves())
 
 
     def test_undo(self):
@@ -132,6 +143,7 @@ class GameTest(unittest.TestCase):
         value = self.board.get_board()[-1, 0]
         self.assertEqual(value, NO_PIECE)
 
+
     def test_undo_win(self):
         for i in range(3):
             self.board.play(0)
@@ -141,6 +153,8 @@ class GameTest(unittest.TestCase):
         self.board.undo()
         self.assertGreater(len(self.board.get_valid_moves()), 0)
         self.assertEqual(self.board.get_winner(), NO_PIECE)
+        self.assertEqual(self.board.get_turn(), PIECE1)
+
 
     def test_undo_stalemate(self):
         moves = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 7, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7]
@@ -150,12 +164,14 @@ class GameTest(unittest.TestCase):
         self.board.undo()
         self.assertGreater(len(self.board.get_valid_moves()), 0)
         self.assertEqual(self.board.get_winner(), NO_PIECE)
+        self.assertEqual(self.board.get_turn(), PIECE2)
         
     
     # Generic test for a winner
     def __test_winner(self, piece):
         self.assertEqual(self.board.get_valid_moves(), [])
         self.assertEqual(self.board.get_winner(), piece)
+        self.assertEqual(self.board.get_turn(), NO_PIECE)
 
 
 
