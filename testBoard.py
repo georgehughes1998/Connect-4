@@ -61,6 +61,59 @@ class GameTest(unittest.TestCase):
 
         self.__test_winner(PIECE2)
 
+    """
+          o
+        o x
+      o o o
+    o x x x   x
+    """
+    def test_winner1_diag1(self):
+        moves = [0, 1, 1, 2, 2, 3, 2, 5, 3, 3, 3]
+        for move in moves:
+            self.board.play(move)
+
+        self.__test_winner(PIECE1)
+
+    """
+          x
+        x o
+      x x x   o
+    x o o o   o
+    """
+    def test_winner2_diag1(self):
+        moves = [5, 0, 1, 1, 2, 2, 3, 2, 5, 3, 3, 3]
+        for move in moves:
+            self.board.play(move)
+
+        self.__test_winner(PIECE2)
+
+    """
+        o
+        x o
+        o o o
+    x   x x x o
+    """
+    def test_winner1_diag2(self):
+        moves = [7, 6, 6, 5, 5, 4, 5, 2, 4, 4, 4]
+        for move in moves:
+            self.board.play(move)
+
+        self.__test_winner(PIECE1)
+
+
+    """
+        x
+        o x
+    o   x x x
+    o   o o o x
+    """
+    def test_winner2_diag2(self):
+        moves = [2, 7, 6, 6, 5, 5, 4, 5, 2, 4, 4, 4]
+        for move in moves:
+            self.board.play(move)
+
+        self.__test_winner(PIECE2)
+
 
     def test_stalemate(self):
         # List of moves which leads to stalemate
