@@ -111,31 +111,28 @@ class Board:
         winner = NO_PIECE
 
         # Check both colours
-        # Todo: Consider only checking one colour
-        for colour in [PIECE1, PIECE2]:
-            # Consider only this piece
-            mask = (self._board == colour).astype(np.int8)
+        # Consider only this piece
+        mask = (self._board == self.get_turn()).astype(np.int8)
 
-            # Set up kernels to count the number of counters
-            # in each direction
-            kernel_horizontal = np.ones(shape=(1, NUM_IN_A_ROW))
-            kernel_vertical = np.ones(shape=(NUM_IN_A_ROW, 1))
-            kernel_diag1 = np.eye(NUM_IN_A_ROW)
-            kernel_diag2 = np.rot90(kernel_diag1)
+        # Set up kernels to count the number of counters
+        # in each direction
+        kernel_horizontal = np.ones(shape=(1, NUM_IN_A_ROW))
+        kernel_vertical = np.ones(shape=(NUM_IN_A_ROW, 1))
+        kernel_diag1 = np.eye(NUM_IN_A_ROW)
+        kernel_diag2 = np.rot90(kernel_diag1)
 
-            # Convolve the masked board with each kernel
-            kernels = [kernel_horizontal, kernel_vertical, kernel_diag1, kernel_diag2]
-            counts = [convolve(mask, kernel, mode='constant', cval=0.0) for kernel in kernels]
+        # Convolve the masked board with each kernel
+        kernels = [kernel_horizontal, kernel_vertical, kernel_diag1, kernel_diag2]
+        counts = [convolve(mask, kernel, mode='constant', cval=0.0) for kernel in kernels]
 
-            # Where the convolved board is equal to the winning number
-            # this means that a row of winning counters was found
-            res = np.any(np.array(counts) >= NUM_IN_A_ROW)
+        # Where the convolved board is equal to the winning number
+        # this means that a row of winning counters was found
+        res = np.any(np.array(counts) >= NUM_IN_A_ROW)
 
-            # Todo: Identify the winning position(s)
+        # Todo: Identify the winning position(s)
 
-            if res:
-                winner = colour
-                break
+        if res:
+            winner = self.get_turn()
 
         # The result is stalemate if there are no moves
         if winner == NO_PIECE and len(self.get_valid_moves()) == 0:
