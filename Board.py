@@ -101,6 +101,10 @@ class Board:
     def get_winner(self):
         return self._winner
 
+
+    def get_move_stack(self):
+        return [col for _, col in self._move_stack]
+
     
     def _check_end_condition(self):
         # Default no winner
