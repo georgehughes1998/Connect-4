@@ -143,6 +143,9 @@ class GameTest(unittest.TestCase):
         value = self.board.get_board()[-1, 0]
         self.assertEqual(value, NO_PIECE)
 
+        # Ensure turn counter is decremented
+        self.assertEqual(self.board.get_turn_number(), 0)
+
 
     def test_undo_win(self):
         for i in range(3):
@@ -154,6 +157,7 @@ class GameTest(unittest.TestCase):
         self.assertGreater(len(self.board.get_valid_moves()), 0)
         self.assertEqual(self.board.get_winner(), NO_PIECE)
         self.assertEqual(self.board.get_turn(), PIECE1)
+        self.assertEqual(self.board.get_turn_number(), 6)
 
 
     def test_undo_stalemate(self):
@@ -165,6 +169,7 @@ class GameTest(unittest.TestCase):
         self.assertGreater(len(self.board.get_valid_moves()), 0)
         self.assertEqual(self.board.get_winner(), NO_PIECE)
         self.assertEqual(self.board.get_turn(), PIECE2)
+        self.assertEqual(self.board.get_turn_number(), 63)
         
     
     # Generic test for a winner
