@@ -17,6 +17,9 @@ BLUE = pygame.Color(0, 0, 255)
 LIGHT_BLUE = pygame.Color(100, 100, 255)
 GREY = pygame.Color(127, 127, 127)
 
+counter_sound = pygame.mixer.Sound("counter.ogg")
+counter_sound.set_volume(0.1)
+
 window = pygame.display.set_mode(SCREEN_SIZE)
 
 w, h = 8, 8
@@ -100,6 +103,7 @@ while do_loop:
                 # Try placing in this column
                 try:
                     res = board.play(selected_column)
+                    counter_sound.play()
                 except:
                     # Todo: play a sound on failure
                     pass
