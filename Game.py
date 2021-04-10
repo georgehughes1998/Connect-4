@@ -22,10 +22,11 @@ counter_sound.set_volume(0.1)
 
 window = pygame.display.set_mode(SCREEN_SIZE)
 
-w, h = 8, 8
-board = Board(h, w)
+w, h = 6, 6
+start = PIECE2
+board = Board(h, w, start)
 
-depth = 4
+depth = 7
 agent = MinimaxAgent(board, depth)
 
 def draw_board(surface, board, back_colour, empty_colour, counter1_colour, counter2_colour, rect):
@@ -112,9 +113,15 @@ while do_loop:
         elif event.type == KEYDOWN:
             # Reset the board and start a new game
             if event.key == K_r:
-                board = Board(h, w)
+                # Record the game
+                with open("games.txt", "a") as games_log:
+                    games_log.write(str(board.get_move_stack()) + "\n")
+                board = Board(h, w, start)
                 agent = MinimaxAgent(board, depth)
                 do_update = True
+            if event.key == K_u:
+                board.undo()
+                board.undo()
             # Exit
             if event.key == K_ESCAPE:
                 do_loop = False
